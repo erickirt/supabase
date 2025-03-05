@@ -131,12 +131,9 @@ const StorageSettings = () => {
     updateStorageConfig({
       projectRef,
       fileSizeLimit: convertToBytes(data.fileSizeLimit, data.unit),
-      // @ts-ignore [Joshen clean up] Remove this once storage changes are deployed'
       features: {
         imageTransformation: { enabled: data.imageTransformationEnabled },
-        ...(config.features.s3Protocol !== undefined
-          ? { s3Protocol: config?.features.s3Protocol }
-          : {}),
+        s3Protocol: { enabled: config.features.s3Protocol.enabled },
       },
     })
   }
@@ -271,6 +268,7 @@ const StorageSettings = () => {
                   icon={<Clock size={14} className="text-foreground-muted" />}
                   primaryText="Free Plan has a fixed upload file size limit of 50 MB."
                   secondaryText="Upgrade to the Pro Plan for a configurable upload file size limit of up to 50 GB."
+                  source="storageSizeLimit"
                 />
               </div>
             )}
